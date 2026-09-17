@@ -17,6 +17,7 @@ function Spark({
   const h = 64;
   const pts = data.slice(-120);
   const step = pts.length > 1 ? w / (pts.length - 1) : w;
+  if (pts.length < 2) pts.push(...Array(2 - pts.length).fill(0));
   const d = pts
     .map((v, i) => `${i === 0 ? "M" : "L"}${(i * step).toFixed(1)},${(h - (Math.min(v, max) / max) * h).toFixed(1)}`)
     .join(" ");
