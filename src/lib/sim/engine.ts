@@ -113,7 +113,8 @@ export class Simulation {
       this.finished = true;
       this.pushLog("info", "Goal reached — scenario completed");
     }
-    if (this.samples.length === 0 || this.elapsed - this.samples[this.samples.length - 1].t > 0.2) {
+    const lastSample = this.samples[this.samples.length - 1];
+    if (!lastSample || this.elapsed - lastSample.t > 0.2) {
       this.samples.push({
         t: this.elapsed,
         speed: this.ego.speed,
@@ -220,8 +221,9 @@ export class Simulation {
         const t = (i / 12) * HORIZON;
         const px = tr.x + tr.vx * t;
         const py = tr.y + tr.vy * t;
-        const dx = Math.abs(path[i].x - px);
-        const dy = Math.abs(path[i].y - py);
+        const pt = path[i]!;
+        const dx = Math.abs(pt.x - px);
+        const dy = Math.abs(pt.y - py);
         if (dx < pad && dy < padY) return Infinity;
         const clearance = Math.max(0, dx - pad) + Math.max(0, dy - padY) * 0.2;
         if (clearance < 2.5) cost += (2.5 - clearance) * 3.5 * (1 - i / 16);

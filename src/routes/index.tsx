@@ -37,7 +37,7 @@ const DECISION_STYLE: Record<string, string> = {
 };
 
 function Dashboard() {
-  const [scenarioId, setScenarioId] = useState(SCENARIOS[0].id);
+  const [scenarioId, setScenarioId] = useState(SCENARIOS[0]!.id);
   const [running, setRunning] = useState(false);
   const [state, setState] = useState<SimState | null>(null);
   const simRef = useRef<Simulation | null>(null);
@@ -46,7 +46,7 @@ function Dashboard() {
 
   const reset = useCallback(
     (id: string) => {
-      const scenario = SCENARIOS.find((s) => s.id === id) ?? SCENARIOS[0];
+      const scenario = SCENARIOS.find((s) => s.id === id) ?? SCENARIOS[0]!;
       const sim = new Simulation(scenario);
       simRef.current = sim;
       setState(sim.snapshot());
@@ -88,7 +88,7 @@ function Dashboard() {
     setRunning(runningRef.current);
   };
 
-  const scenario = SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0];
+  const scenario = SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0]!;
   const m = state?.metrics;
 
   return (

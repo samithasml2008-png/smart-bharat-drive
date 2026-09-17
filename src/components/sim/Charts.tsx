@@ -20,7 +20,7 @@ function Spark({
   const d = pts
     .map((v, i) => `${i === 0 ? "M" : "L"}${(i * step).toFixed(1)},${(h - (Math.min(v, max) / max) * h).toFixed(1)}`)
     .join(" ");
-  const last = pts.length ? pts[pts.length - 1] : 0;
+  const last = pts[pts.length - 1] ?? 0;
   return (
     <div className="rounded-lg border border-border bg-card p-3">
       <div className="flex items-baseline justify-between">
