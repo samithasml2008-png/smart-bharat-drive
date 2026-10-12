@@ -10,33 +10,64 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LiveApiRouteImport } from './routes/live-api'
+import { Route as RoutePlannerRouteImport } from './routes/route-planner'
+import { Route as ApiPublicCollisionsRouteImport } from './routes/api/public/collisions'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LiveApiRoute = LiveApiRouteImport.update({
+  id: '/live-api',
+  path: '/live-api',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoutePlannerRoute = RoutePlannerRouteImport.update({
+  id: '/route-planner',
+  path: '/route-planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicCollisionsRoute = ApiPublicCollisionsRouteImport.update({
+  id: '/api/public/collisions',
+  path: '/api/public/collisions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/live-api': typeof LiveApiRoute
+  '/route-planner': typeof RoutePlannerRoute
+  '/api/public/collisions': typeof ApiPublicCollisionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/live-api': typeof LiveApiRoute
+  '/route-planner': typeof RoutePlannerRoute
+  '/api/public/collisions': typeof ApiPublicCollisionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/live-api': typeof LiveApiRoute
+  '/route-planner': typeof RoutePlannerRoute
+  '/api/public/collisions': typeof ApiPublicCollisionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/live-api' | '/route-planner' | '/api/public/collisions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/live-api' | '/route-planner' | '/api/public/collisions'
+  id:
+    '__root__' | '/' | '/live-api' | '/route-planner' | '/api/public/collisions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LiveApiRoute: typeof LiveApiRoute
+  RoutePlannerRoute: typeof RoutePlannerRoute
+  ApiPublicCollisionsRoute: typeof ApiPublicCollisionsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +79,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/live-api': {
+      id: '/live-api'
+      path: '/live-api'
+      fullPath: '/live-api'
+      preLoaderRoute: typeof LiveApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/route-planner': {
+      id: '/route-planner'
+      path: '/route-planner'
+      fullPath: '/route-planner'
+      preLoaderRoute: typeof RoutePlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/collisions': {
+      id: '/api/public/collisions'
+      path: '/api/public/collisions'
+      fullPath: '/api/public/collisions'
+      preLoaderRoute: typeof ApiPublicCollisionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LiveApiRoute: LiveApiRoute,
+  RoutePlannerRoute: RoutePlannerRoute,
+  ApiPublicCollisionsRoute: ApiPublicCollisionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
